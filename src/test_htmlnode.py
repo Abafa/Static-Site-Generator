@@ -1,28 +1,36 @@
 import unittest
-from HTMLNode import *
+from htmlnode import HTMLNode
 
 class TestHTMLNode(unittest.TestCase):
     def test_eq(self):
-        node = HTMLNode(None, "This is a text node")
-        node2 = HTMLNode(None, "This is a text node")
-        self.assertEqual(node, node2)
+        node = HTMLNode(None, None, None, {
+                                        "href": "https://www.google.com",
+                                        "target": "_blank",
+                                          })
+        expected = ' href="https://www.google.com" target="_blank"'
+        result = node.props_to_html()
+        self.assertEqual(result, expected)
 
-    def test_different_types(self):
-        node = TextNode(None, "hello")
-        node2 = TextNode(None, "BOOYA")
-        self.assertNotEqual(node, node2)
 
-    def test_url(self):
-        node = TextNode(None, None, None, {"href" : "https://www.google.com"})
-        node2 = TextNode(None, None, None, {"href" : "https://www.google.com"})
-        self.assertEqual(node, node2)
+    def test_not_eq(self):
+        node = HTMLNode(None, None, None, {
+                                        "href": "https://www.google.com",
+                                          })
+        expected = ' href="https://www.google.com" target="_blank"'
+        result = node.props_to_html()
+        self.assertNotEqual(result, expected)
 
-    def test_not_url(self):
-        node = TextNode(None, None, None, {"href" : "http://www.boot.dev/")
-        node2 = TextNode(None, "hello")
-        self.assertNotEqual(node, node2)  
+    def test_eq_two(self):
+        node = HTMLNode(None, None, None, {
+                                        "href": "https://www.google.com",
+                                        "target": "_blank",
+                                        "bully" : "_it_s_not_fine_bro"
+                                          })
+        expected = ' href="https://www.google.com" target="_blank" bully="_it_s_not_fine_bro"'
+        result = node.props_to_html()
+        self.assertEqual(result, expected)
 
-    
+
 
 if __name__ == "__main__":
     unittest.main()

@@ -1,20 +1,20 @@
 class HTMLNode:
-    def __init__ (self, tag = None : str, value = None : str, children = None : list, props = None : dict) :
+    def __init__ (self, tag : str = None, value : str = None, children : list = None, props : dict = None) :
         self.tag = tag
         self.value = value
         self.children = children
         self.props = props
 
     def to_html(self) :
-        exception NotImplementedError
+        raise NotImplementedError("this method must be implemented by a subclass")
     
     def props_to_html(self) : 
         props_string = ""
         if self.props == None or not self.props : 
             return props_string
 
-        for k, v in self.props.items :
-            props_string += f" {k}={v}"
+        for k, v in self.props.items() :
+            props_string += f' {k}="{v}"'
         return props_string
 
     def __repr__(self):
