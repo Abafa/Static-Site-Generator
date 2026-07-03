@@ -19,3 +19,5 @@ def split_nodes_delimiter(old_nodes : list[TextNode], delimiter : str, text_type
 
     return splited_old_node
 
+#PETIT MESSAGE QUI VA JUSTE ME PERMETTRE DE GIT PUSH COMME UN SALE ! 
+
