@@ -51,3 +51,7 @@ class ParentNode(HTMLNode) :
         for child in self.children :
             output_string += child.to_html()
         return f"<{self.tag}{self.props_to_html()}>" + output_string + f"</{self.tag}>"
+
+
+
+#message alakon juste pour pas cramer de frozen flame
