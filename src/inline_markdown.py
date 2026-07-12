@@ -26,4 +26,5 @@ def split_nodes_delimiter(
 def extract_markdown_images(text: str) -> list :
     pass
 
-
+def extract_markdown_links(text: str) -> tupple :
+    pass
