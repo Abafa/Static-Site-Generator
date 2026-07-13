@@ -87,5 +87,42 @@ class TestInlineMarkdown(unittest.TestCase):
         )
 
 
+class TestExtractMarkdownImages(unittest.TestCase):
+    def test_extract_image(self):
+        text = "This is an image ![alt text](https://www.boot.dev/image.png)"
+        image_nodes = extract_markdown_images(text)
+        self.assertListEqual(
+            [TextNode("alt text", "https://www.boot.dev/image.png")],
+            image_nodes,
+        )
+    
+    def test_extract_markdown_images(self):
+    matches = extract_markdown_images(
+        "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+    )
+    self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+
+
+
+class TestExtractMarkdownUrl(self):
+    def test_extract_link(self):
+        text = "This is a link [link text](https://www.boot.dev)"
+        link_nodes = extract_markdown_links(text)
+        self.assertTupleEqual(
+            (TextNode("link text", "https://www.boot.dev"),),
+            link_nodes,
+        )
+    
+    def test_extract_markdown_links(self):
+    matches = extract_markdown_links(
+        "This is text with a [link](https://www.boot.dev)"
+    )
+    self.assertTupleEqual((("link", "https://www.boot.dev"),), matches)
+
+
+
+
+
+
 if __name__ == "__main__":
     unittest.main()
