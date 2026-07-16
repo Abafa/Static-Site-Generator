@@ -1,7 +1,7 @@
 import unittest
 
 from inline_markdown import (
-    split_nodes_delimiter,
+    split_nodes_delimiter, extract_markdown_images, extract_markdown_links
 )
 from textnode import TextNode, TextType
 
@@ -97,14 +97,14 @@ class TestExtractMarkdownImages(unittest.TestCase):
         )
     
     def test_extract_markdown_images(self):
-    matches = extract_markdown_images(
-        "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
-    )
-    self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
+        matches = extract_markdown_images(
+            "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
+        )
+        self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
 
 
 
-class TestExtractMarkdownUrl(self):
+class TestExtractMarkdownUrl(unittest.TestCase):
     def test_extract_link(self):
         text = "This is a link [link text](https://www.boot.dev)"
         link_nodes = extract_markdown_links(text)
@@ -114,10 +114,10 @@ class TestExtractMarkdownUrl(self):
         )
     
     def test_extract_markdown_links(self):
-    matches = extract_markdown_links(
-        "This is text with a [link](https://www.boot.dev)"
-    )
-    self.assertTupleEqual((("link", "https://www.boot.dev"),), matches)
+        matches = extract_markdown_links(
+            "This is text with a [link](https://www.boot.dev)"
+        )
+        self.assertTupleEqual((("link", "https://www.boot.dev"),), matches)
 
 
 
