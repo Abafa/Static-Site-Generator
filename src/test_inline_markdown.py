@@ -1,7 +1,9 @@
 import unittest
 
 from inline_markdown import (
-    split_nodes_delimiter, extract_markdown_images, extract_markdown_links
+    extract_markdown_images,
+    extract_markdown_links,
+    split_nodes_delimiter,
 )
 from textnode import TextNode, TextType
 
@@ -65,7 +67,7 @@ class TestInlineMarkdown(unittest.TestCase):
         node = TextNode("**bold** and _italic_", TextType.TEXT)
         new_nodes = split_nodes_delimiter([node], "**", TextType.BOLD)
         new_nodes = split_nodes_delimiter(new_nodes, "_", TextType.ITALIC)
-        self.assertListEqual(
+        self.assertEqual(
             [
                 TextNode("bold", TextType.BOLD),
                 TextNode(" and ", TextType.TEXT),
@@ -86,42 +88,23 @@ class TestInlineMarkdown(unittest.TestCase):
             new_nodes,
         )
 
-
-class TestExtractMarkdownImages(unittest.TestCase):
-    def test_extract_image(self):
-        text = "This is an image ![alt text](https://www.boot.dev/image.png)"
-        image_nodes = extract_markdown_images(text)
-        self.assertListEqual(
-            [TextNode("alt text", "https://www.boot.dev/image.png")],
-            image_nodes,
-        )
-    
     def test_extract_markdown_images(self):
         matches = extract_markdown_images(
             "This is text with an ![image](https://i.imgur.com/zjjcJKZ.png)"
         )
         self.assertListEqual([("image", "https://i.imgur.com/zjjcJKZ.png")], matches)
 
-
-
-class TestExtractMarkdownUrl(unittest.TestCase):
-    def test_extract_link(self):
-        text = "This is a link [link text](https://www.boot.dev)"
-        link_nodes = extract_markdown_links(text)
-        self.assertTupleEqual(
-            (TextNode("link text", "https://www.boot.dev"),),
-            link_nodes,
-        )
-    
     def test_extract_markdown_links(self):
         matches = extract_markdown_links(
-            "This is text with a [link](https://www.boot.dev)"
+            "This is text with a [link](https://boot.dev) and [another link](https://wikipedia.org)"
         )
-        self.assertTupleEqual((("link", "https://www.boot.dev"),), matches)
-
-
-
-
+        self.assertListEqual(
+            [
+                ("link", "https://boot.dev"),
+                ("another link", "https://wikipedia.org"),
+            ],
+            matches,
+        )
 
 
 if __name__ == "__main__":
