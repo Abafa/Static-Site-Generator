@@ -1,6 +1,7 @@
 from enum import Enum
 
 from htmlnode import LeafNode
+from inline_markdown import split_nodes_delimiter, split_nodes_image, split_nodes_link
 
 
 class TextType(Enum):
@@ -49,3 +50,12 @@ def text_node_to_html_node(text_node: TextNode) -> LeafNode:
             raise ValueError("invalid URL")
         return LeafNode("img", "", {"src": text_node.url, "alt": text_node.text})
     raise ValueError(f"invalid text type: {text_node.text_type}")
+
+
+
+def text_to_textnode(text) -> list[TextNode] : 
+    text_nodes = []
+    text_nodes += split_nodes_delimiter(text)
+    text_nodes += split_nodes_image(text)
+    text_nodes += split_nodes_link(text)
+    return text_nodes
