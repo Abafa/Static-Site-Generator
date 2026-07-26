@@ -1,7 +1,7 @@
 from enum import Enum
 
 from htmlnode import LeafNode
-from inline_markdown import split_nodes_delimiter, split_nodes_image, split_nodes_link
+#from inline_markdown import split_nodes_delimiter, split_nodes_image, split_nodes_link
 
 
 class TextType(Enum):
@@ -53,9 +53,3 @@ def text_node_to_html_node(text_node: TextNode) -> LeafNode:
 
 
 
-def text_to_textnode(text) -> list[TextNode] : 
-    text_nodes = []
-    text_nodes += split_nodes_delimiter(text)
-    text_nodes += split_nodes_image(text)
-    text_nodes += split_nodes_link(text)
-    return text_nodes
