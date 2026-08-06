@@ -23,3 +23,7 @@ def block_to_block_type(block: str) -> BlockType:
     if all(line.split(".")[0].isdigit() for line in splited_block):
         return BlockType.ORDERED_LIST
     return BlockType.PARAGRAPH
+
+
+
+#dont wanna waste a frozen flame ! 
