@@ -1,4 +1,5 @@
 from enum import Enum
+from inline_markdown import markdown_to_blocks
 
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
@@ -26,4 +27,12 @@ def block_to_block_type(block: str) -> BlockType:
 
 
 
-#dont wanna waste a frozen flame ! 
+def markdown_to_html_node(markdown) :
+    splited_markdown = markdown_to_blocks(markdown)
+    block_types = [block_to_block_type(block) for block in splited_markdown]
+    pass
+
+
+
+def to_blockquote(block: str) -> str:
+    pass
