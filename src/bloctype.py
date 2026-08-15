@@ -1,6 +1,6 @@
 from enum import Enum
 from inline_markdown import markdown_to_blocks
-from htmlnode import HTMLNode
+from htmlnode import HTMLNode, LeafNode, ParentNode
 
 class BlockType(Enum):
     PARAGRAPH = "paragraph"
@@ -52,26 +52,26 @@ def markdown_to_html_node(markdown) :
 
 def to_blockquote(block: str) -> str:
     new_block = block[1:].strip()
-    return HTMLNode("blockquote", None, new_block, False)
+    return LeafNode("blockquote", new_block)
 
 def to_code(block: str) -> str:
     new_block = block[3:-3].strip()
-    return HTMLNode("pre", None, HTMLNode("code", None, new_block, False), False)
+    return ParentNode("pre", None, [LeafNode("code", new_block)])
 
 def to_heading(block: str) -> str:
     level = block.count("#")
     new_block = block[level:].strip()
-    return HTMLNode(f"h{level}", None, new_block, False)
+    return LeafNode(f"h{level}", new_block)
 
 def to_paragraph(block: str) -> str:
-    return HTMLNode("p", None, block.strip(), False)
+    return LeafNode("p", block.strip())
 
 def to_ordered_list(block: str) -> str:
     splited_block = block.split("\n")
-    list_items = [HTMLNode("li", None, line.split('.', 1)[1].strip(), False) for line in splited_block]
-    return HTMLNode("ol", None, list_items, False)
+    list_items = [LeafNode("li", line.split('.', 1)[1].strip()) for line in splited_block]
+    return ParentNode("ol", None, list_items)
 
 def to_unordered_list(block: str) -> str:
     splited_block = block.split("\n")
-    list_items = [HTMLNode("li", None, line[2:].strip(), False) for line in splited_block]
-    return HTMLNode("ul", None, list_items, False)
+    list_items = [LeafNode("li", line[2:].strip()) for line in splited_block]
+    return ParentNode("ul", None, list_items)
