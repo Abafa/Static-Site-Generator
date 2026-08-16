@@ -61,4 +61,4 @@ the **same** even with inline stuff
             "<div><pre><code>This is text that _should_ remain\nthe **same** even with inline stuff\n</code></pre></div>",
         )
 
-#OOF ! 
+#OOF ! Don't know why the .to_html does not work...
