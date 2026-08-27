@@ -5,6 +5,7 @@ def copy_content(path, destination) :
         shutil.copy(path, destination)
     else :
         os.mkdir(destination)
+        os.path.join(destination, os.path.basename(path))
         copy_content(path, destination)
 
 
