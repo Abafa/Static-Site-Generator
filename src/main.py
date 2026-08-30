@@ -5,15 +5,13 @@ def copy_content(target_list : list[str], destination_path : str, origin_path = 
     for target in target_list :
         if os.path.isfile(f"{origin_path}/{target}") :
             shutil.copy(f"{origin_path}/{target}", destination_path)
-            print(f"copied {target} from {origin_path} to {destination_path}")
+            #print(f"copied {target} from {origin_path} to {destination_path}")
         else :
-            if os.path.exists(f"{destination_path}/{target}") :
-                raise FileExistsError(f"destination path {destination_path} already exists")
             os.mkdir(f"{destination_path}/{target}")
             new_destination_path = os.path.join(destination_path, target)
             new_origin_path = os.path.join(origin_path, target)
             recursive_list = os.listdir(new_origin_path)
-            print(f"new dir created, going deeper")
+            #print(f"new dir created, going deeper")
             copy_content(recursive_list, new_destination_path, new_origin_path)
 
 
@@ -28,9 +26,7 @@ def static_to_public () :
 
 
 
-
-
 def main() :
-    static_to_public()
+   static_to_public()
 
 main()
