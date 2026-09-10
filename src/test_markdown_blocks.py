@@ -5,6 +5,7 @@ from markdown_blocks import (
     block_to_block_type,
     markdown_to_blocks,
     markdown_to_html_node,
+    extract_title
 )
 
 
@@ -167,3 +168,17 @@ the **same** even with inline stuff
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class TestExtractTitle(unittest.TestCase):
+    def test_basic(self):
+        md = "# Hello"
+        self.assertEqual(extract_title(md), "Hello")
+
+    def test_boring(self):
+        md = "# Don't wanna live on this course anymore"
+        self.assertEqual(extract_title(md), "Don't wanna live on this course anymore")
+
+    def nope_dont_care(self):
+        md = "fuck this course"
+        self.assertRaises(extract_title(md), "No title found !")
