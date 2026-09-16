@@ -1,35 +1,29 @@
-from textnode import TextNode, TextType
-import shutil, os
+import os
+import shutil
 
-def copy_content(target_list : list[str], destination_path : str, origin_path = "./static") :
-    for target in target_list :
-        if os.path.isfile(f"{origin_path}/{target}") :
-            shutil.copy(f"{origin_path}/{target}", destination_path)
-            #print(f"copied {target} from {origin_path} to {destination_path}")
-        else :
-            os.mkdir(f"{destination_path}/{target}")
-            new_destination_path = os.path.join(destination_path, target)
-            new_origin_path = os.path.join(origin_path, target)
-            recursive_list = os.listdir(new_origin_path)
-            #print(f"new dir created, going deeper")
-            copy_content(recursive_list, new_destination_path, new_origin_path)
+from copystatic import copy_files_recursive
+from gencontent import generate_page
+
+dir_path_static = "./static"
+dir_path_public = "./public"
+dir_path_content = "./content"
+template_path = "./template.html"
 
 
+def main() -> None:
+    print("Deleting public directory...")
+    if os.path.exists(dir_path_public):
+        shutil.rmtree(dir_path_public)
 
+    print("Copying static files to public directory...")
+    copy_files_recursive(dir_path_static, dir_path_public)
 
-def static_to_public () :
-    shutil.rmtree("./public", ignore_errors=True)
-    os.mkdir("./public")
-    list_targets = os.listdir("./static")
-    copy_content(list_targets, "./public")
-    print("Copying done")
+    print("Generating page...")
+    generate_page(
+        os.path.join(dir_path_content, "index.md"),
+        template_path,
+        os.path.join(dir_path_public, "index.html"),
+    )
 
-
-
-def main() :
-   static_to_public()
 
 main()
-
-
-#nottoday neithertoday ! 
