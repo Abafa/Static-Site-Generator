@@ -27,6 +27,20 @@ def generate_page(from_path: str, template_path: str, dest_path: str) -> None:
     to_file.write(template)
 
 
+def generate_pages_recursive(dir_path_content, template_path, dest_dir_path) :
+    for directory in os.listdir(dir_path_content):
+        new_dir_path_content = os.path.join(dir_path_content, directory)
+        new_dest_dir_path = os.path.join(dest_dir_path, directory)
+        if os.path.isfile(new_dir_path_content):
+            # Generate HTML files instead of copying the source Markdown name.
+            dest_file_name = f"{os.path.splitext(directory)[0]}.html"
+            dest_file_path = os.path.join(dest_dir_path, dest_file_name)
+            generate_page(new_dir_path_content, template_path, dest_file_path)
+        else :
+            generate_pages_recursive(new_dir_path_content, template_path, new_dest_dir_path)
+
+
+
 def extract_title(md: str) -> str:
     lines = md.split("\n")
     for line in lines:
