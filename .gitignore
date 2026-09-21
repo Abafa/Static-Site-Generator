@@ -1,8 +1,5 @@
 .gitignore
 Commands.md
 __pycache__/
-public/
 backup_public/
-test_static/
-test_public/
 src/trashcode.py
